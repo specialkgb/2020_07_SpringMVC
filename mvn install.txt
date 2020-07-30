@@ -1,0 +1,10 @@
+C:/oraclexe/app/oracle/product/11.2.0/server/jdbc/lib/ojdbc6.jar
+C:/bizwork/jdk_3rd/ojdbc6.jar
+
+mvn install:install-file  -Dfile=C:/bizwork/jdk_3rd/ojdbc6.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0
+
+-- window 버전
+mvn install:install-file  -Dfile=C:/bizwork/jdk_3rd/ojdbc6.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0
+
+-- gitbash 버전(linux, mac)
+./mvn install:install-file  -Dfile=/C/bizwork/jdk_3rd/ojdbc6.jar -Dpackaging=jar -DgeneratePom=true -DgroupId=com.oracle -DartifactId=ojdbc6 -Dversion=11.2.0
