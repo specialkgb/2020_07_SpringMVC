@@ -14,7 +14,11 @@ import lombok.ToString;
 
 public class BlogVO {
 	
-	private String user;
-	private String title;
-	private String content;
+	private long bl_seq;
+	private String bl_user;
+	private String bl_title;
+	private String bl_contents;
+	
+	private String bl_date;
+	private String bl_time;
 }
