@@ -14,6 +14,11 @@ import lombok.ToString;
 
 public class BlogVO {
 	
+	/*
+	 * 클래스를 만들 때 변수값을 초기화 하지 않아도
+	 * 이 클래스로 객체를 생성하면 숫자형 변수는 0으로
+	 * 문자열형 변수는 ""으로 자동 초기화
+	 */
 	private long bl_seq;
 	private String bl_user;
 	private String bl_title;

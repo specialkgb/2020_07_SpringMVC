@@ -3,6 +3,7 @@ package com.biz.blog.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,10 @@ public class BlogController {
 	
 	// @Service Annotation이 부착된 클래스를 주입해 달라
 	@Autowired
+	
+	// 1개의 인터페이스를 상속받은 클래스가 2개 이상일때
+	// 어떤 클래스를 가져와서 Autowired를 할지 명시해준다.
+	@Qualifier("bServiceV2")
 	private BlogService bService;
 	
 	
@@ -60,12 +65,15 @@ public class BlogController {
 	 * 전달된 데이터(값)을 VO객체 담아달라
 	 */
 	@RequestMapping(value = "/input",method=RequestMethod.GET)
-	public String input() {
+	public String input(Model model) {
 		
+		// 400오류 방지용 NUll데이터를 방지하기위해 공백의 BlogVO를 만들어서 보내준다
+		
+		model.addAttribute("BLOG", new BlogVO());
 		return "write";
 	}
 
-	@RequestMapping(value = "/writer", method=RequestMethod.POST)
+	@RequestMapping(value = "/input", method=RequestMethod.POST)
 	public String write(@ModelAttribute BlogVO blogVO, Model model) {
 		/*
 		 * Debuging Code : 어떤 값을 확인하는 용도
@@ -79,12 +87,91 @@ public class BlogController {
 		log.debug("로그인한 사용자는?" + "홍길동");
 		log.debug("로그인한 비밀번호는?" + "12345");
 		
-//		bService.insert(blogVO);
-//		
+		bService.insert(blogVO);
+
 //		model.addAttribute("TITLE",blogVO.getBl_title());
 //		model.addAttribute("CONTENT",blogVO.getBl_contents());
 //		model.addAttribute("USER",blogVO.getBl_user());
 		
 		return "redirect:/blog/list";
+	}
+	@RequestMapping(value = "/view", method=RequestMethod.GET)
+	public String view(String seq, Model model) {
+		
+		log.debug("SEQ : {}", seq);
+		/*
+		 * SQL Injection 공격을 사전에 차단하기 위해
+		 * Controller에서 SEQ값을 문자열형에서 Long형으로 변환하는 코드를 추가
+		 */
+		long long_seq = 0;
+		
+		try {
+			long_seq = Long.valueOf(seq);
+		} catch (Exception e) {
+			model.addAttribute("ERROR", seq + "형식의 QUERY금지!!");
+			return "view_err";
+		}
+		BlogVO blogVO = bService.findBySeq(long_seq);
+		model.addAttribute("BLOG", blogVO);
+		return "view";
+	}
+	
+	@RequestMapping(value = "/delete", method=RequestMethod.GET)
+	public String delete(String seq) {
+		
+		long long_seq = 0;
+		try {
+			long_seq = Long.valueOf(seq);
+		} catch (Exception e) {
+			return "view_error";
+		}
+		
+		bService.delete(long_seq);
+		return "redirect:/blog/list";
+	}
+	
+	@RequestMapping(value = "/update", method=RequestMethod.GET)
+	public String update(String seq, Model model) {
+		
+		long long_seq = 0;
+		
+		try {
+			long_seq = Long.valueOf(seq);
+		} catch (Exception e) {
+			return "view_error";
+		}
+		
+		// update할 데이터를 SELECT 해오기
+		BlogVO blogVO = bService.findBySeq(long_seq);
+		
+		// update할 데이터를 model에 싣기
+		model.addAttribute("BLOG",blogVO);
+		
+		// 입력폼 화면 열기
+		return "write";
+		
+	
+		
+		
+		
+		
+	}
+	@RequestMapping(value = "/update", method=RequestMethod.POST)
+	public String update(BlogVO blogVO, Model model) {
+		
+		log.debug("UPDATE POST Method");
+		log.debug(blogVO.toString());
+		
+		bService.update(blogVO);
+		
+		// 수정이 완료되면 다시 detail view로 화면을 전환하기
+		model.addAttribute("seq",blogVO.getBl_seq());
+		return "redirect:/blog/view";
+		
+		
+		
+		
+		
+		
 	}
 }
