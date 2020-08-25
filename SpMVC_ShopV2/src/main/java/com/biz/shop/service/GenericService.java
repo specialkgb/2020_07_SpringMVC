@@ -25,7 +25,7 @@ import com.biz.shop.model.ProductVO;
 public interface GenericService<VO,PK> {
 	
 	public List<VO> selectAll();
-	public ProductVO findById(PK id); // ID = PK라는 개념으로 생성하는 method
+	public VO findById(PK id); // ID = PK라는 개념으로 생성하는 method
 	
 	public int insert(VO vo);
 	public int update(VO vo);

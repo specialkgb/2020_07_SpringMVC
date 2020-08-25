@@ -1,15 +1,15 @@
 $(function () {
-  function getPCode() {
+  function getDCode() {
     $.ajax({
       type: "GET",
-      url: `${rootPath}/api/product/get_pcode`,
+      url: rootPath + "/dept/get_dcode",
       success: function (result) {
-        $("#p_code").val(result);
+        $("#d_code").val(result);
       },
     });
   }
 
-  $("#p_code_gen").click(getPCode);
+  $("#d_code_gen").click(getDCode);
 
   $("#btn_save").click(function () {
     /**
@@ -25,20 +25,21 @@ $(function () {
      * 순서는 const 를 먼저 고려, let, var 순으로 생각하자
      * 가급적 var는 자제할것
      * */
-    var p_code = $("#p_code").val();
-    var p_name = $("#p_name").val();
-    if (p_code == "") {
-      if (confirm("상품코드는 반드시 필요합니다.\n상품코드를 생성할까요?")) {
-        getPCode();
+    var d_code = $("#d_code").val();
+    var d_name = $("#d_name").val();
+    if (d_code == "") {
+      if (
+        confirm("거래처코드는 반드시 필요합니다.\n거래처코드를 생성할까요?")
+      ) {
+        getDCode();
       }
       return false;
     }
-    if (p_name == "") {
-      alert("상품이름은 반드시 입력해야 합니다.");
-      $("#p_name").focus();
+    if (d_name == "") {
+      alert("거래처이름은 반드시 입력해야 합니다.");
+      $("#d_name").focus();
       return false;
     }
-
     $("form").submit();
   });
 });
