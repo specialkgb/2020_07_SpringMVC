@@ -80,7 +80,21 @@
 			<version>8.0.21</version>
 		</dependency>
 
-
+		<!-- json 구조의 데이터를 파싱하여 vo에 담기위한 중간 도구 -->
+		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+		<dependency>
+			<groupId>com.googlecode.json-simple</groupId>
+			<artifactId>json-simple</artifactId>
+			<version>1.1.1</version>
+		</dependency>
+		
+		<!-- Controller에서 responseBody를 사용하여 객체등을 웹에게 JSON형태로 만들어 보내는 중간 도구 -->
+		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.11.2</version>
+		</dependency>
 
 		<!-- AspectJ -->
 		<dependency>
@@ -101,7 +115,6 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>1.2.3</version>
-			<scope>test</scope>
 		</dependency>
 
 
