@@ -27,7 +27,7 @@ public class BooksController {
 		List<BookVO> bookList = bookDao.selectAll();
 		model.addAttribute("BOOKS", bookList);
 		
-		return "books/list";
+		return "books/book-list";
 		
 	}
 	@RequestMapping(value = "/input", method=RequestMethod.GET)
