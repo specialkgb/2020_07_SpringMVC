@@ -8,10 +8,11 @@
 <meta charset="UTF-8">
 <meta name='viewport' content='width=device-width, initial-scale=1'>
 <title>나의 홈페이지</title>
+<link href="${rootPath}/static/css/book-list.css?ver=2020-09-24-001" rel="stylesheet">
+<script src="${rootPath}/static/js/book-list.js?ver=2020-09-24"></script>
 </head>
 <body>
-<h3>보유 도서 리스트</h3>
-<table border="1">
+<table id="book-list">
 	<tr>
 		<th>No</th>
 		<th>도서명</th>
@@ -32,9 +33,10 @@
 		</c:when>
 		<c:otherwise>
 			<c:forEach items="${BOOKS}" var="book" varStatus="i">
-				<tr>
+				<tr data-seq="${book.seq}">
 					<td>${i.count}</td>
-					<td>${book.title}</td>
+					<td class="book-title"
+						data-seq="${book.seq}">${book.title}</td>
 					<td>${book.author}</td>
 					<td>${book.publisher}</td>
 					<td>${book.price}</td>
@@ -47,6 +49,8 @@
 	
 	
 </table>
-<a href="${rootPath}/books/input">새로작성</a>
+<div id="book-link-box">
+	<a href="${rootPath}/books/input">새로작성</a>
+</div>
 </body>
 </html>

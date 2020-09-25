@@ -2,10 +2,14 @@ package com.biz.read.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.biz.read.mapper.BookDao;
 import com.biz.read.model.BookVO;
 import com.biz.read.service.NaverService;
 
@@ -18,6 +22,9 @@ public class BookApiController {
 	@Autowired
 	@Qualifier(value = "naverServiceV2")
 	private NaverService<BookVO> nService;
+	
+	@Autowired
+	private BookDao bookDao;
 
 	@RequestMapping(value = "/isbn", method = RequestMethod.POST,
 			produces = "application/json;charset=utf8")
@@ -40,5 +47,15 @@ public class BookApiController {
 		log.debug("도서정보 :" + bookVO.toString());
 		return bookVO;
 
+	}
+	@ResponseBody
+	@RequestMapping(value = "/detail/{seq}")
+	public BookVO detail(@PathVariable("book_seq") String id, Model model) {
+
+		long seq = Long.valueOf(id);
+		bookDao.findById(seq);
+		BookVO bookVO = bookDao.findById(seq);
+
+		return bookVO;
 	}
 }

@@ -8,25 +8,67 @@
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
 		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+		
+	<bean id="envConfig"
+		class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="passwordEnvName" value="BIZ.NET" />
+	</bean>
 
+	<bean id="encConvert" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="envConfig"/>
+	</bean>
+	
+	<!-- 
+		*.properties 파일을 읽어서 ENC(**)로 되어 있는 문자열을 추출하여
+		PBE*Encryptor에게 보내서 암호문을 복호화 한 후 필요한 곳에 주입해주는 역할
+	-->
+	<bean class="org.jasypt.spring31.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="encConvert"/>
+		<property name="fileEncoding" value="UTF-8"/>
+		<property name="locations">
+			<list>
+				<value>/WEB-INF/spring/db.connect.properties</value>
+			</list>
+		</property>
+	</bean>
+	
+	
 	<!-- dataSource -->
 	<bean id="ds" class="org.apache.commons.dbcp2.BasicDataSource">
-		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver" />
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="username" value="user1" />
-		<property name="password" value="user1" />
+		<property name="driverClassName"
+			value="oracle.jdbc.driver.OracleDriver" />
+		<property name="url"
+			value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="${oracle.username}" />
+		<property name="password" value="${oracle.password}" />
 	</bean>
 
 	<!-- sqlSessionFactory -->
-	<bean id="sqlFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-		<property name="dataSource" ref="ds"/>
-		<property name="mapperLocations" value="/WEB-INF/spring/mybatis/mapper/*-mapper.xml"/>
-		<property name="typeAliasesPackage" value="com.biz.read.model"/>
+	<bean id="sqlFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="ds" />
+		<property name="mapperLocations"
+			value="/WEB-INF/spring/mybatis/mapper/*-mapper.xml" />
+		<property name="typeAliasesPackage"
+			value="com.biz.read.model" />
 	</bean>
+	
+	
 	<!-- sqlSessionTemplate -->
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
-		<constructor-arg ref="sqlFactory" index="0"/>
+		<constructor-arg ref="sqlFactory" index="0" />
 	</bean>
-	<mybatis-spring:scan base-package="com.biz.read.mapper"/>
-
+	
+	
+	<tx:annotation-driven/>
+	<bean id="transactionManager" 
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="ds"/>
+	</bean>
+	
+	
+	
+	<mybatis-spring:scan
+		base-package="com.biz.read.mapper" />
 </beans>
