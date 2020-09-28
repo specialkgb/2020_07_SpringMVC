@@ -68,6 +68,14 @@ nav#main-nav {
   background-color: #dddddd;
   color: tomato;
 }
+
+#main-nav button {
+  background-color: transparent;
+  color: inherit;
+  border: 0;
+  outline: none;
+}
+
 section#main-section {
   height: 1000px;
 }

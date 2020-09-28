@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/security https://www.springframework.org/schema/security/spring-security-5.2.xsd">
+		
+		<context:component-scan base-package="com.biz.read.service.auth"/>
+		
+		<!-- spring security에서 사용할 AuthenticationProvider를 구현한 클래스를 bean 등록 -->
+		<bean id="customAuthProvider" class="com.biz.read.auth.AuthProviderImpl"/>
+		
+		<security:authentication-manager>
+			<security:authentication-provider ref="customAuthProvider"/>
+		</security:authentication-manager>
+		
+		
+		
+		<security:http auto-config="true" use-expressions="true">
+		
+		<security:csrf disabled="false"/>
+		
+		<security:form-login 
+							username-parameter="username"
+							password-parameter="password"/>
+									
+		<security:logout logout-url="/logout"
+							logout-success-url="/"
+							invalidate-session="true"/>
+
+		<security:intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
+		<security:intercept-url pattern="/member/mypage" access="hasAnyRole('ADMIN','USER')"/>
+		<security:intercept-url pattern="/member/password" access="hasAnyRole('ADMIN','USER')"/>
+		<security:intercept-url pattern="/member/**" access="permitAll()"/>
+		<security:intercept-url pattern="/books/**" access="hasAnyRole('ADMIN','USER')"/>
+		<security:intercept-url pattern="/**" access="permitAll()"/>
+		
+	</security:http>
+	
+	<!-- 회원가입, 로그인에서 사용자의 비밀번호를 암호화 하기 위하여 암호화 도구를 bean으로 설정 -->
+	<bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+		<constructor-arg value="4" index="0"/>
+	</bean>
+
+</beans>

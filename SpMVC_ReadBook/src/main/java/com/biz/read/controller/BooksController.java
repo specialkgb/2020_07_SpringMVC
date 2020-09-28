@@ -1,6 +1,7 @@
 package com.biz.read.controller;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.biz.read.mapper.BookDao;
 import com.biz.read.model.BookVO;
+import com.biz.read.model.ReadBookVO;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -79,16 +80,36 @@ public class BooksController {
 
 	}
 
-	@RequestMapping(value = "/detail/{book_seq}", method = RequestMethod.GET, produces = "application/json;charset=utf8")
-	public String detail(@PathVariable("book_seq") String id, Model model) {
-
-		long seq = Long.valueOf(id);
-		bookDao.findById(seq);
-		BookVO bookVO = bookDao.findById(seq);
-		
-		model.addAttribute("BOOKVO",bookVO);
-		model.addAttribute("BODY","BOOK-DETAIL");
-		return "home";
-	}
+	@RequestMapping(value = "/detail/{book_seq}",method=RequestMethod.GET,
+	         produces = "application/json;charset=utf8")
+	   public String detail(@PathVariable("book_seq")
+	   String id, Model model) {
+	      
+	      log.debug("PATH : {}",id);
+	      long seq = Long.valueOf(id);
+	      BookVO bookVO = bookDao.findById(seq);
+//	      log.debug(bookVO.toString());
+	      
+	      model.addAttribute("BOOKVO", bookVO);
+	      
+	      
+	      // 09-28 추가
+	      LocalDateTime lDateTime = LocalDateTime.now();
+	      String lDate = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(lDateTime);
+	      String lTime = DateTimeFormatter.ofPattern("HH:MM:ss").format(lDateTime);
+	      
+	      // 09-28 추가
+	      ReadBookVO readBookVO = ReadBookVO.builder()
+	            .r_date(lDate)
+	            .r_stime(lTime)
+	            .build();
+	      
+	      // 09-28 추가
+	      model.addAttribute("readBookVO",readBookVO);
+	      
+	      
+	      model.addAttribute("BODY", "BOOK-DETAIL");
+	      return "home";
+	   }
 
 }
