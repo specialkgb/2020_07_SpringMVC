@@ -95,9 +95,7 @@ div.toggle {
 	})
 </script>
 <nav>
-	<div class="toggle">
-		<i class="fas fa-bars menu"></i>
-	</div>
+
 	<ul>
 		<li>Home</li>
 		<li>상품관리</li>

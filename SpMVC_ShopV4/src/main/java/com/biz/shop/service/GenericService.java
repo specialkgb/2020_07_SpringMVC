@@ -3,7 +3,7 @@ package com.biz.shop.service;
 import java.util.List;
 
 import com.biz.shop.model.ProductVO;
-/**
+/*
  * GenericService interface
  * @param <VO>
  * @param <PK>

@@ -38,9 +38,7 @@ padding: 1.5rem;
 				<%@ include file="/WEB-INF/views/component/product/product_writeV2.jspf" %>
 			</c:when>
 			
-			<c:when test="${BODY == 'PRO_HOME' }">
-				<%@ include file="/WEB-INF/views/component/product/product_list.jspf" %>
-			</c:when>
+			
 			
 			<c:when test="${BODY == 'PRO_DETAIL' }">
 				<%@ include file="/WEB-INF/views/component/product/product_detail.jspf" %>
