@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring-1.2.xsd">
+		
+	<!-- xml 파일에 layout을 설정하고 그 설정값으로 view를 만드는 용도의 클래스 -->
+	<bean class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>classpath:/**/appServlet/tiles-layout.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- spring UrlBaseViewResolver를 사용하여 tiles layout을 rendering하는 설정 -->
+	<!-- 일반적으로 bean객체를 생성하여 주입하는 방식으로 설정이 안되고 -->
+	<!-- 클래스의 이름을 value값으로 지정을 해줘야 한다 -->
+	<!-- value값에 클래스 이름이 자동완성이 안된다 -->
+	
+	<!-- order 속성을 1로 설정 -->
+	<!-- servlet-context.xml internalResourceView -->
+	<!-- UrlBaseViewResolver -->
+	<!-- Controller에서 문자열을 return 했을 때 어떤 view가 우선적으로 작동되어 -->
+	<!-- 사용자에게 response를 할 것인지 지정해주기 위해서 -->
+	<!-- order 속성을 지정한다. 우선적으로 tiles view가 rendering 되도록 하기 위해서 -->
+	<!-- sevlet-context.xml view의 order를 2로 설정하고 -->
+	<!-- UrlBaseView의 order를 1로 설정한다 -->
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" 
+				value="org.springframework.web.servlet.view.tiles3.TilesView"/>
+		<property name="order" value="1"/>
+	</bean>
+	
+</beans>
