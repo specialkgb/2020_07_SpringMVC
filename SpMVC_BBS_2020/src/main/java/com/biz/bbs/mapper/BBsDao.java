@@ -11,7 +11,7 @@ import com.biz.bbs.sql.BBsSQL;
 
 public interface BBsDao {
 	
-	@Select(" SELECT * FROM tbl_bbs ")
+	@Select(" SELECT * FROM tbl_bbs order by b_seq desc ")
 	public List<BBsVO> selectAll();
 	
 	@Select(" SELECT * FROM tbl_bbs WHERE b_seq = #{seq} ")

@@ -70,18 +70,14 @@ button#list {
 
 <script>
 	$(function() {
-		var toolbar = [
-			['style',['bold','italic','underline'] ],
-			['fontsize',['fontsize']],
-			['font Style',['fontname']],
-			['color',['color']],
-			['para',['ul','ol','paragraph']],
-			['height',['height']],
-			['table',['table']],
-			['insert',['link','hr','picture']],
-			['view',['fullscreen','codeview']]	
-		]
-		
+		var toolbar = [ [ 'style', [ 'bold', 'italic', 'underline' ] ],
+				[ 'fontsize', [ 'fontsize' ] ],
+				[ 'font Style', [ 'fontname' ] ], [ 'color', [ 'color' ] ],
+				[ 'para', [ 'ul', 'ol', 'paragraph' ] ],
+				[ 'height', [ 'height' ] ], [ 'table', [ 'table' ] ],
+				[ 'insert', [ 'link', 'hr', 'picture' ] ],
+				[ 'view', [ 'fullscreen', 'codeview' ] ] ]
+
 		$("#b_content").summernote({
 			lang : "ko-KR",
 			width : "100%",
@@ -91,7 +87,7 @@ button#list {
 	})
 </script>
 
-<form id="write-form" method="post">
+<form id="write-form" method="post" enctype="multipart/form-data">
 	<fieldset>
 		<legend>글쓰기</legend>
 		<div>
@@ -109,6 +105,9 @@ button#list {
 		<div>
 			<label></label>
 			<textarea id="b_content" rows="5" cols="20" name="b_content"></textarea>
+		</div>
+		<div>
+			<label>이미지</label> <input type="file" name="file" accept="image/*">
 		</div>
 		<div class="button-box">
 			<button type="button" id="list">리스트</button>
