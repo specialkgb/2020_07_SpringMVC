@@ -13,7 +13,12 @@
 					let tag_name = event.target.tagName;
 					
 					if(tag_name === "TD") {
-						let seq = event.target.dataset.seq;
+					//	let seq = event.target.dataset.seq;
+					
+						// td tag가 클릭디었으면 현재 클릭된 td tag와 가장 인접한
+						// tr tag를 참조하겠다.
+						// 클릭된 TD를 기준으로 TR tag에서 seq값 추출
+						let seq = event.target.closest("TR").dataset.seq
 						if(seq) {
 							// alert(seq)
 							document.location.href = "${rootPath}/bbs/detail/" + seq
@@ -31,11 +36,11 @@
 	 */
 </script>
 <style>
-	td.bbs-subject {
+	td.bbs-tr {
 		cursor: pointer;
 	}
 	
-	td.bbs-subject:hover {
+	td.bbs-tr:hover {
 		background-color: #ccc;
 	}
 </style>
