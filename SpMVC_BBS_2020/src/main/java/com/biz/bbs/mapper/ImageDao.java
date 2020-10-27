@@ -12,7 +12,7 @@ import com.biz.bbs.sql.ImageSQL;
 public interface ImageDao {
 	
 	@Select("select * from tbl_images where i_bseq = #{i_bseq}")
-	public List<ImageVO> findByBSeq(long i_bseq);
+	public List<ImageVO> findBySeq(long i_bseq);
 	
 	@InsertProvider(type = ImageSQL.class, method="insert")
 	public int insert(@Param("vo") ImageVO imageVO, @Param("b_seq") long b_seq);

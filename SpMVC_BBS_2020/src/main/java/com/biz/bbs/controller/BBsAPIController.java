@@ -35,8 +35,6 @@ public class BBsAPIController {
 	@Qualifier("fileServiceV4")
 	private FileService fileService;
 
-//	@CrossOrigin("http://127.0.0.1:5500")
-
 	@RequestMapping(value = "/bbs", method = RequestMethod.GET)
 	public List<BBsVO> bbs_list() {
 
@@ -66,6 +64,7 @@ public class BBsAPIController {
 
 	@RequestMapping(value = "/bbs", method = RequestMethod.PUT)
 	public String bbs_update(@ModelAttribute BBsVO bbsVO, @RequestParam("file") MultipartFile file) {
+		
 		log.debug("PUT RequestMethod Type으로 요청된 메소드");
 		log.debug("수신한 데이터 {}", bbsVO.toString());
 		log.debug("업로드한 파일 정보 {}", file.getOriginalFilename());

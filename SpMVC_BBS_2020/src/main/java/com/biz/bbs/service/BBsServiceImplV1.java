@@ -46,7 +46,7 @@ public class BBsServiceImplV1 implements BBsService {
 	@Override
 	public BBsVO findBySeq(long long_seq) {
 		BBsVO bbsVO = bbsDao.findBySeq(long_seq);
-		List<ImageVO> images = imageDao.findByBSeq(long_seq);
+		List<ImageVO> images = imageDao.findBySeq(long_seq);
 		
 		bbsVO.setImages(images);
 		
@@ -74,11 +74,7 @@ public class BBsServiceImplV1 implements BBsService {
 		return bbsDao.delete(long_seq);
 	}
 
-	@Override
-	public void insert(BBsVO bbsVO) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public List<String> insert(BBsVO bbsVO, MultipartHttpServletRequest files) {
@@ -102,6 +98,12 @@ public class BBsServiceImplV1 implements BBsService {
 			imageDao.insert(vo, b_seq);
 		}
 		return null;
+	}
+	
+	@Override
+	public void insert(BBsVO bbsVO) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
