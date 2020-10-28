@@ -5,16 +5,12 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.biz.ems.model.ImageVO;
-
 public interface FileService {
 	
-	public String fileUp(MultipartFile file);
-	public List<ImageVO> filesUp(MultipartHttpServletRequest files);
+	public List<String> filesUp(MultipartHttpServletRequest files); // 여러개 파일
 	
-	public boolean fileDelete1(String s_file1);
-	public boolean fileDelete2(String s_file2);
-
+	public String fileUp(MultipartFile file); // 1개 파일
 	
+	public int fileDelete(String fileName);
 
 }
