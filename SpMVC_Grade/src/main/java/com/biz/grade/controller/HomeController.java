@@ -98,7 +98,5 @@ public class HomeController {
 		gradeList.add(gradeVO);
 
 		return gradeList;
-
 	}
-
 }

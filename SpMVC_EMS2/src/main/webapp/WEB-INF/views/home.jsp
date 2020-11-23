@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>    
 <%@taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
 <c:set var="rootPath" value="${pageContext.request.contextPath}" />
-<link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&display=swap" rel="stylesheet" />
 <!DOCTYPE html>
 <html>
 <head>
