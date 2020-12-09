@@ -146,6 +146,7 @@ myData.go.kr.key.js
 naver_secret.js
 dbconfig.js
 seoul_config.js
+DataGoConfig.*
 
 # ETC
 .bak
